@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function LandingPage() {
   return (
@@ -6,11 +7,11 @@ function LandingPage() {
         <h3>Welcome to BrickSage</h3>
         <h4>Already a user?</h4>
         <form>
-            <input placeholder='username'></input>
+            <input placeholder='email'></input>
             <input placeholder='password'></input>
         </form>
         <h4>First time?</h4>
-        <button>Register</button>
+        <Link to={"/register"}><button>Register</button></Link>
 
     </section>
   )
