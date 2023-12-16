@@ -1,4 +1,5 @@
 import React from 'react'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 function Register() {
   return (
@@ -10,7 +11,6 @@ function Register() {
         <input placeholder='Password'></input>
         <input placeholder='Confirm Password'></input>
         <button type='submit'>Register</button>
-
     </form>
     </section>
   )
