@@ -1,7 +1,10 @@
 import React from 'react'
+import app from '../../config/firebase.js'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 function Register() {
+  const auth = getAuth(app)
+  
   return (
     <section>
     <h3>Create an account</h3>
