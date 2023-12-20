@@ -24,8 +24,15 @@ function Register() {
       const errorMessage = error.message
       console.log(errorCode);
     })
+  }
 
-
+  function checkMatchingInputs() {
+    if (email === emailConfirmation) {
+      setIsEmailMatching(true)
+    }
+    if (password === passwordConfirmation) {
+      setIsPasswordMatching(true)
+    }
   }
 
   
@@ -34,6 +41,9 @@ function Register() {
     <h3>Create an account</h3>
     <form onSubmit={handleSubmit}>
         <input required placeholder='Email' onChange={(e) => {setEmail(e.target.value)}}></input>
+        
+        
+        
         <input required placeholder='Confirm Email'onChange={(e) => {setEmailConfirmation(e.target.value)}}></input>
         { isEmailMatching || !email ? null : <p>Email's do not match</p>}
         <input required placeholder='Password'onChange={(e) => {setPassword(e.target.value)}}></input>
