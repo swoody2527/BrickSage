@@ -22,6 +22,7 @@ function Register() {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message
+      console.log(errorCode);
     })
 
 
@@ -32,11 +33,11 @@ function Register() {
     <section>
     <h3>Create an account</h3>
     <form onSubmit={handleSubmit}>
-        <input placeholder='Email' onChange={(e) => {setEmail(e.target.value)}}></input>
-        <input placeholder='Confirm Email'onChange={(e) => {setEmailConfirmation(e.target.value)}}></input>
+        <input required placeholder='Email' onChange={(e) => {setEmail(e.target.value)}}></input>
+        <input required placeholder='Confirm Email'onChange={(e) => {setEmailConfirmation(e.target.value)}}></input>
         { isEmailMatching || !email ? null : <p>Email's do not match</p>}
-        <input placeholder='Password'onChange={(e) => {setPassword(e.target.value)}}></input>
-        <input placeholder='Confirm Password'onChange={(e) => {setPasswordConfirmation(e.target.value)}}></input>
+        <input required placeholder='Password'onChange={(e) => {setPassword(e.target.value)}}></input>
+        <input required placeholder='Confirm Password'onChange={(e) => {setPasswordConfirmation(e.target.value)}}></input>
         { isPasswordMatching || !password ? null : <p>Password's do not match</p>}
         <button type='submit'>Register</button>
     </form>
