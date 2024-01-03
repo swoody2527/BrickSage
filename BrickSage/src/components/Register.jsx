@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import app from '../../config/firebase.js'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
@@ -9,6 +9,12 @@ function Register() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
   const [isEmailMatching, setIsEmailMatching] = useState(false)
   const [isPasswordMatching, setIsPasswordMatching] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(false)
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    checkMatchingInputs();
+  }, [email, emailConfirmation, password, passwordConfirmation])
 
   
   const auth = getAuth(app)
@@ -18,8 +24,14 @@ function Register() {
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user
+      setIsRegistered(true)
+      setEmail("");
+      setEmailConfirmation("");
+      setPassword("");
+      setPasswordConfirmation("");
     })
     .catch((error) => {
+      setIsRegistered(false)
       const errorCode = error.code;
       const errorMessage = error.message
       console.log(errorCode);
@@ -27,12 +39,8 @@ function Register() {
   }
 
   function checkMatchingInputs() {
-    if (email === emailConfirmation) {
-      setIsEmailMatching(true)
-    }
-    if (password === passwordConfirmation) {
-      setIsPasswordMatching(true)
-    }
+    setIsEmailMatching(email === emailConfirmation)
+    setIsPasswordMatching(password === passwordConfirmation)
   }
 
   
@@ -40,16 +48,14 @@ function Register() {
     <section>
     <h3>Create an account</h3>
     <form onSubmit={handleSubmit}>
-        <input required placeholder='Email' onChange={(e) => {setEmail(e.target.value)}}></input>
-        
-        
-        
-        <input required placeholder='Confirm Email'onChange={(e) => {setEmailConfirmation(e.target.value)}}></input>
+        <input required placeholder='Email' value={email} onChange={(e) => {setEmail(e.target.value)}}></input>
+        <input required placeholder='Confirm Email' value={emailConfirmation} onChange={(e) => {setEmailConfirmation(e.target.value)}}></input>
         { isEmailMatching || !email ? null : <p>Email's do not match</p>}
-        <input required placeholder='Password'onChange={(e) => {setPassword(e.target.value)}}></input>
-        <input required placeholder='Confirm Password'onChange={(e) => {setPasswordConfirmation(e.target.value)}}></input>
+        <input required placeholder='Password' value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
+        <input required placeholder='Confirm Password' value={passwordConfirmation} onChange={(e) => {setPasswordConfirmation(e.target.value)}}></input>
         { isPasswordMatching || !password ? null : <p>Password's do not match</p>}
         <button type='submit'>Register</button>
+        { isRegistered ? <p>Successfully Registered</p> : null}
     </form>
     </section>
   )
