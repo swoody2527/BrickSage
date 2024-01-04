@@ -12,6 +12,11 @@ function Register() {
   const [isRegistered, setIsRegistered] = useState(false)
   const [error, setError] = useState("")
 
+  const errorMessages = {
+    'auth/invalid-email': 'Invalid Email Address. Please provide a valid email',
+    'auth/weak-password': 'Password should be at least 6 characters'
+  }
+
   useEffect(() => {
     checkMatchingInputs();
   }, [email, emailConfirmation, password, passwordConfirmation])
@@ -29,12 +34,14 @@ function Register() {
       setEmailConfirmation("");
       setPassword("");
       setPasswordConfirmation("");
+      setError("")
     })
     .catch((error) => {
       setIsRegistered(false)
       const errorCode = error.code;
       const errorMessage = error.message
-      console.log(errorCode);
+      setError(errorCode)
+      console.log(errorMessage);
     })
   }
 
@@ -56,6 +63,7 @@ function Register() {
         { isPasswordMatching || !password ? null : <p>Password's do not match</p>}
         <button type='submit'>Register</button>
         { isRegistered ? <p>Successfully Registered</p> : null}
+        { error ? errorMessages[error] : null}
     </form>
     </section>
   )
