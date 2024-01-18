@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import app from '../../config/firebase.js'
+import { UserContext } from '../contexts/UserContext.jsx'
 
 function LandingPage() {
-
+  const {user} = useContext(UserContext)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const { login } = useContext(UserContext)
+
+  console.log(user);
 
   const auth = getAuth(app)
   function handleLogin(e) {
@@ -14,6 +18,7 @@ function LandingPage() {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+      login(user)
     })
     .catch((error) => {
       const errorCode = error.code;
