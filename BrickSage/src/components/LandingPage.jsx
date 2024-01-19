@@ -1,24 +1,27 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import app from '../../config/firebase.js'
 import { UserContext } from '../contexts/UserContext.jsx'
+import { useNavigate } from 'react-router-dom'
 
 function LandingPage() {
-  const {user} = useContext(UserContext)
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const { login } = useContext(UserContext)
+  const navigate = useNavigate()
 
-  console.log(user);
 
   const auth = getAuth(app)
+  
   function handleLogin(e) {
     e.preventDefault()
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       login(user)
+      navigate("/home")
     })
     .catch((error) => {
       const errorCode = error.code;

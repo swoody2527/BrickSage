@@ -8,7 +8,7 @@ import Navbar from "./components/Navbar";
 import { UserContext } from "./contexts/UserContext"
 
 function App() {
-  let user = useContext(UserContext)
+  let { user } = useContext(UserContext)
   return (
     <main>
         {user ? (
